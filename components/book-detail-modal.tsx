@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { type Book, STATUS_BADGE_STYLES, STATUS_LABELS } from '@/lib/books'
+import { type Book, STATUS_BADGE_STYLES, STATUS_LABELS, formatDate } from '@/lib/books'
 
 interface BookDetailModalProps {
   book: Book | null
@@ -21,17 +21,6 @@ interface BookDetailModalProps {
   onClose: () => void
   onEdit: (book: Book) => void
   onDelete: (book: Book) => void
-}
-
-function formatDate(dateStr: string | null): string {
-  if (!dateStr) return '—'
-  const date = new Date(dateStr)
-  if (Number.isNaN(date.getTime())) return '—'
-  return date.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
 }
 
 export function BookDetailModal({
@@ -55,7 +44,10 @@ export function BookDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border p-0">
+      {/* sm:max-w-2xl, not max-w-2xl: the base dialog ships sm:max-w-sm, and
+          tailwind-merge keeps both because they're different breakpoints — the
+          sm: one then wins above 640px and crushes the layout. */}
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border p-0">
         <div className="flex flex-col sm:flex-row gap-0">
           {/* Cover panel */}
           <div className="sm:w-48 flex-shrink-0 bg-muted relative min-h-[200px] sm:min-h-full rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none overflow-hidden">

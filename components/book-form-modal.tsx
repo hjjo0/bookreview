@@ -181,7 +181,8 @@ export function BookFormModal({ open, onClose, onSubmit, initialData }: BookForm
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-card border-border">
+      {/* sm:max-w-lg overrides the base dialog's sm:max-w-sm — see book-detail-modal. */}
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto bg-card border-border">
         <DialogHeader>
           <DialogTitle className="font-serif text-xl text-foreground">
             {isEditing ? '책 수정' : '책 추가'}

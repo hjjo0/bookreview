@@ -86,3 +86,27 @@ export function today(): string {
   const offsetMs = now.getTimezoneOffset() * 60 * 1000
   return new Date(now.getTime() - offsetMs).toISOString().slice(0, 10)
 }
+
+/**
+ * Format a YYYY-MM-DD date for display.
+ *
+ * new Date('2024-10-01') parses as UTC midnight, which formats as the *previous*
+ * day for any viewer west of UTC — 2024년 9월 30일 in Los Angeles. These are
+ * calendar dates with no time or zone attached, so build them as local dates and
+ * let them mean the same day everywhere.
+ */
+export function formatDate(dateStr: string | null): string {
+  if (!dateStr) return '—'
+
+  const [year, month, day] = dateStr.split('-').map(Number)
+  if (!year || !month || !day) return '—'
+
+  const date = new Date(year, month - 1, day)
+  if (Number.isNaN(date.getTime())) return '—'
+
+  return date.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
