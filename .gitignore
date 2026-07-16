@@ -1,0 +1,18 @@
+# v0 sandbox internal files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+.snowflake/
+.v0-trash/
+.vercel/
+
+# Environment variables — these hold the Supabase service_role key.
+# Ignore every .env variant, then re-allow the committed template.
+.env
+.env.*
+!.env.example
+
+# Common ignores
+node_modules
+.next/
+.DS_Store
